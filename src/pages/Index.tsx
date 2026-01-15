@@ -3,7 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import Icon from '@/components/ui/icon';
+import { exportToWord } from '@/utils/exportToWord';
+import { toast } from 'sonner';
 
 interface ShiftData {
   number: number;
@@ -172,6 +175,25 @@ const Index = () => {
                 <Icon name="MapPin" size={20} />
                 <span className="font-semibold">Урал</span>
               </div>
+            </div>
+            <div className="pt-6">
+              <Button 
+                size="lg" 
+                className="bg-white text-primary hover:bg-white/90 shadow-lg font-semibold text-base px-8 py-6"
+                onClick={() => {
+                  toast.promise(
+                    exportToWord(shifts),
+                    {
+                      loading: 'Создание документа...',
+                      success: 'Программа скачана в формате Word!',
+                      error: 'Ошибка при создании документа',
+                    }
+                  );
+                }}
+              >
+                <Icon name="Download" size={20} className="mr-2" />
+                Скачать программу в Word
+              </Button>
             </div>
           </div>
         </div>
